@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+	maven {
+		url 'http://download.eclipse.org/rt/eclipselink/maven.repo/'
+	}
+}
+
+dependencies {
+	compile 'junit:junit:4.11',
+			'org.eclipse.persistence:javax.persistence:2.0.3',
+			'javax:javaee-api:6.0'
+	testRuntime 'org.eclipse.persistence:eclipselink:2.3.0',
+
+			'org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.3.0',
+			'org.apache.derby:derby:10.9.1.0'
+}
+
+group 'com.coderskitchen'
+version '1.0.0'
