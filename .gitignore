@@ -9,3 +9,4 @@ TestDBRule.iml
 .gradle/
 *.log
 build/
+*.iml

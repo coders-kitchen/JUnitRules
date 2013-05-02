@@ -1,5 +1,6 @@
 package com.coderskitchen.junit.rule;
 
+import com.coderskitchen.junit.rule.em.EntityManagerRule;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import javax.persistence.PersistenceContext;
  */
 public class AppTest {
     @Rule
-    public SetupEntityManagerRule setupEntityManagerRule = new SetupEntityManagerRule(this);
+    public EntityManagerRule setupEntityManagerRule = new EntityManagerRule(this);
     
     @PersistenceContext(unitName="RuleTutorialPU")
     EntityManager first;
