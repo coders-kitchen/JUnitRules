@@ -14,7 +14,7 @@ dependencies {
 			'org.eclipse.persistence:javax.persistence:2.0.3',
 			'javax:javaee-api:6.0'
 	testRuntime 'org.eclipse.persistence:eclipselink:2.3.0',
-
+			'org.mockito:mockito-all:1.9.0',
 			'org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.3.0',
 			'org.apache.derby:derby:10.9.1.0'
 }
