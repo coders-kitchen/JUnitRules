@@ -1,5 +1,8 @@
 package com.coderskitchen.junit.rule.injection;
 
+import com.coderskitchen.junit.rule.injection.util.cut.EmptyClass;
+import com.coderskitchen.junit.rule.injection.util.test.NothingMatchingToInject;
+import com.coderskitchen.junit.rule.injection.util.test.NothingToInject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import org.junit.Test;
@@ -13,7 +16,7 @@ public class InjectionMatcherTest {
   @Test
   public void nothingToInject() {
     Class cutter = EmptyClass.class;
-    Class cutTest = NothingToInjectTestCase.class;
+    Class cutTest = NothingToInject.class;
     cut.forClassUnderTest(cutter);
     cut.atTestClass(cutTest);
     cut.match();

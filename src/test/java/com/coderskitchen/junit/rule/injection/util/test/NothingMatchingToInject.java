@@ -1,4 +1,4 @@
-package com.coderskitchen.junit.rule.injection;
+package com.coderskitchen.junit.rule.injection.util.test;
 
 public class NothingMatchingToInject {
 
