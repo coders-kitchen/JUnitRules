@@ -49,8 +49,8 @@ public class FilePrepareStatementTest extends Statement {
 
     @Test
     public void directorySetupFailed() throws Exception {
-        try {
-            File f = new File("./tmp");
+      File f = new File("./tmp");
+      try {
             f.mkdirs();
             f.setWritable(false);
 
@@ -62,9 +62,8 @@ public class FilePrepareStatementTest extends Statement {
             statement.evaluate();
         } catch (Throwable ex) {
             ex.printStackTrace();
-            assertEquals("Directory '/home/mrpaeddah/Development/tutorials/JUnitRuleTutorial/FilePrepareRule/./tmp/tmp' does not exist and creation failed!", ex.getMessage());
+            assertEquals("Directory '" + f.getAbsolutePath() +"/tmp' does not exist and creation failed!", ex.getMessage());
         } finally {
-            File f = new File("./tmp");
             f.setWritable(true);
             f.delete();
         }
@@ -72,8 +71,8 @@ public class FilePrepareStatementTest extends Statement {
 
     @Test
     public void fileSetupFailed() throws Exception {
-        try {
-            File f = new File("./tmp");
+      File f = new File("./tmp");
+      try {
             f.mkdirs();
             f.setWritable(false);
 
@@ -84,9 +83,8 @@ public class FilePrepareStatementTest extends Statement {
             statement = new FilePrepareStatement(this, structure);
             statement.evaluate();
         } catch (Throwable ex) {
-            assertEquals("Touch of file '/home/mrpaeddah/Development/tutorials/JUnitRuleTutorial/FilePrepareRule/./tmp/test.jar' failed!", ex.getMessage());
+            assertEquals("Touch of file '" + f.getAbsolutePath() +"/test.jar' failed!", ex.getMessage());
         } finally {
-            File f = new File("./tmp");
             f.setWritable(true);
             f.delete();
         }

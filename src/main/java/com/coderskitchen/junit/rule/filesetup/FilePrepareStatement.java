@@ -39,7 +39,8 @@ public class FilePrepareStatement extends Statement {
 
   /**
    * Constructor
-   * @param base The wrapped statement
+   *
+   * @param base               The wrapped statement
    * @param directoryStructure directory structure to be created
    */
   public FilePrepareStatement(final Statement base, HashMap<String, HashSet<String>> directoryStructure) {
@@ -49,11 +50,15 @@ public class FilePrepareStatement extends Statement {
 
   @Override
   public void evaluate() throws Throwable {
+    boolean setupSuccessfully = false;
     try {
       setupStructure();
+      setupSuccessfully = true;
       base.evaluate();
     } finally {
-      tearDownStructure();
+      if (setupSuccessfully) {
+        tearDownStructure();
+      }
     }
   }
 
