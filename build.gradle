@@ -35,39 +35,42 @@ artifacts {
 	archives sourcesJar
 }
 
-signing {
-	sign configurations.archives
-}
+if(hasProperty('sonatypeUsername')) {
+	signing {
+		sign configurations.archives
+	}
 
-uploadArchives {
-	repositories {
-		mavenDeployer {
-			beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
 
-			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-				authentication(userName: sonatypeUsername, password: sonatypePassword)
-			}
-			pom.project {
-				name 'JUnit Rules'
-				packaging 'jar'
-				description 'This archive represents a set of JUnit Rules that aren\'t available in the basic setup.'
-				url 'http://coders-kitchen.github.com'
-
-				scm {
-					url 'scm:git@github:CodersKitchen/JUnitRules.git'
-					connection 'scm:git@github:CodersKitchen/JUnitRules.git'
-					developerConnection 'scm:git@github:CodersKitchen/JUnitRules.git'
+				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}
+				pom.project {
+					name 'JUnit Rules'
+					packaging 'jar'
+					description 'This archive represents a set of JUnit Rules that aren\'t available in the basic setup.'
+					url 'http://coders-kitchen.github.com'
+
+					scm {
+						url 'scm:git@github:CodersKitchen/JUnitRules.git'
+						connection 'scm:git@github:CodersKitchen/JUnitRules.git'
+						developerConnection 'scm:git@github:CodersKitchen/JUnitRules.git'
+					}
 
 
 
-				developers {
-					developer {
-						id 'peterdaum'
-						name 'Peter Daum'
+					developers {
+						developer {
+							id 'peterdaum'
+							name 'Peter Daum'
+						}
 					}
 				}
 			}
 		}
 	}
 }
+
