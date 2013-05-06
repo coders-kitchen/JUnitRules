@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coderskitchen.junit.rule.filesetup;
+package com.coderskitchen.junitrules.filesetup;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.coderskitchen.junit.rule.em;
+package com.coderskitchen.junitrules.em;
 
 import org.junit.runners.model.Statement;
 
