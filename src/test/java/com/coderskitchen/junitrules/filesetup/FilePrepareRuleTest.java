@@ -1,4 +1,4 @@
-package com.coderskitchen.junit.rule.filesetup;
+package com.coderskitchen.junitrules.filesetup;
 
 import org.junit.Before;
 import org.junit.Test;

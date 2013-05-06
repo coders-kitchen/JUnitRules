@@ -1,6 +1,6 @@
-package com.coderskitchen.junit.rule;
+package com.coderskitchen.junitrules.em;
 
-import com.coderskitchen.junit.rule.em.EntityManagerRule;
+import com.coderskitchen.junitrules.em.EntityManagerRule;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
