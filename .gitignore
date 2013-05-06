@@ -7,3 +7,4 @@ TestDBRule.iml
 *.log
 build/
 *.iml
+out/
