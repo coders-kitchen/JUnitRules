@@ -6,20 +6,24 @@ import org.junit.runners.model.Statement;
 
 public class AutoInjectRule implements TestRule {
 
-  private final Class testClass;
+  private final Object objectUnderTest;
+  private final Object test;
 
   /**
    * Constructor that sets the current testclass
    *
-   * @param testClass
+   * @param objectUnderTest
    */
-  public AutoInjectRule(Class testClass) {
-    this.testClass = testClass;
+  public AutoInjectRule(Object objectUnderTest, Object test) {
+    this.objectUnderTest = objectUnderTest;
+    this.test = test;
   }
 
   @Override
   public Statement apply(final Statement base, final Description description) {
-
-    return null;
+    AutoInjectStatement autoInjectStatement = new AutoInjectStatement(new InjectionMatcher(), base);
+    autoInjectStatement.atTestClass(test);
+    autoInjectStatement.forClassUnderTest(objectUnderTest);
+    return autoInjectStatement;
   }
 }
