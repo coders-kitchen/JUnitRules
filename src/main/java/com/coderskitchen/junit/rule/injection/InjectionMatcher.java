@@ -45,7 +45,7 @@ public class InjectionMatcher {
     String cutFieldName = cutField.getName();
     if (areNamesEqual(testFieldName, cutFieldName) && areTypesEqual(cutField, testField)) {
       alreadyMatchedFields.add(testFieldName);
-      matches.add(new InjectionMatch(testFieldName, cutFieldName));
+      matches.add(new InjectionMatch(testField, cutField));
     }
   }
 
@@ -53,7 +53,7 @@ public class InjectionMatcher {
     for (Field testField : testFields) {
       if (alreadyMatchedFields.contains(testField.getName()))
         continue;
-      matches.add(new InjectionMatch(testField.getName(), null));
+      matches.add(new InjectionMatch(testField, null));
     }
   }
 

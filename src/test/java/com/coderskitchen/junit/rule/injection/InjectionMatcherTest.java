@@ -11,6 +11,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.util.Set;
 
 public class InjectionMatcherTest {
@@ -29,15 +30,15 @@ public class InjectionMatcherTest {
   }
 
   @Test
-  public void noMatchesFound() {
+  public void noMatchesFound() throws NoSuchFieldException {
     Class cutter = EmptyClass.class;
     Class cutTest = NothingMatchingToInject.class;
     cut.forClassUnderTest(cutter);
     cut.atTestClass(cutTest);
     cut.calculateMatches();
     Set<InjectionMatch> matches = cut.getMatches();
-
-    assertThat(matches, hasItem(new InjectionMatch("injectionString", null)));
+    Field expectedField = cutTest.getDeclaredField("injectionString");
+    assertThat(matches, hasItem(new InjectionMatch(expectedField, null)));
   }
 
   @Test
@@ -52,7 +53,7 @@ public class InjectionMatcherTest {
   }
 
   @Test
-  public void matchesAreCorrect() {
+  public void matchesAreCorrect() throws NoSuchFieldException {
     Class cutter = NonEmptyClass.class;
     Class<MocksToInject> cutTest = MocksToInject.class;
     cut.forClassUnderTest(cutter);
@@ -60,9 +61,15 @@ public class InjectionMatcherTest {
     cut.calculateMatches();
     Set<InjectionMatch> matches = cut.getMatches();
     InjectionMatch[] expected = new InjectionMatch[3];
-    expected[0] = (new InjectionMatch("myTestPropertyMock", "myTestProperty"));
-    expected[1] = (new InjectionMatch("myStringMock", null));
-    expected[2] = (new InjectionMatch("mySecondTestPropertyMock", "mySecondTestProperty"));
+    expected[0] = getInjectionMatch(cutter, "myTestProperty", cutTest, "myTestPropertyMock");
+    expected[1] = getInjectionMatch(cutter, null, cutTest, "myStringMock");
+    expected[2] = getInjectionMatch(cutter, "mySecondTestProperty", cutTest, "mySecondTestPropertyMock");
     assertThat(matches, hasItems(expected));
+  }
+
+  private InjectionMatch getInjectionMatch(final Class classUnderTest, final String classFieldName, final Class cutTest, final String mockFieldName) throws NoSuchFieldException {
+    Field mockField = mockFieldName != null ? cutTest.getDeclaredField(mockFieldName) : null;
+    Field classField = classFieldName != null ? classUnderTest.getDeclaredField(classFieldName) : null;
+    return new InjectionMatch(mockField, classField);
   }
 }
