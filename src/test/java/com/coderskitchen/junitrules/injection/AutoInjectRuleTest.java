@@ -1,7 +1,7 @@
-package com.coderskitchen.junit.rule.injection;
+package com.coderskitchen.junitrules.injection;
 
-import com.coderskitchen.junit.rule.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junit.rule.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
+import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -28,6 +28,7 @@ public class AutoInjectRuleTest {
     MocksToInject mocksToInject = new MocksToInject();
     AutoInjectRule cut = new AutoInjectRule(classUnderTest, mocksToInject);
     Statement result = cut.apply(statementMock, descriptionMock);
+
 
   }
 }

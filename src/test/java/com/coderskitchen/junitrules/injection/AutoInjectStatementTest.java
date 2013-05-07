@@ -1,9 +1,9 @@
-package com.coderskitchen.junit.rule.injection;
+package com.coderskitchen.junitrules.injection;
 
-import com.coderskitchen.junit.rule.injection.util.cut.EmptyClass;
-import com.coderskitchen.junit.rule.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junit.rule.injection.util.test.MocksToInject;
-import com.coderskitchen.junit.rule.injection.util.test.NothingToInject;
+import com.coderskitchen.junitrules.injection.util.cut.EmptyClass;
+import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
+import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.test.NothingToInject;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;

@@ -1,10 +1,10 @@
-package com.coderskitchen.junit.rule.injection;
+package com.coderskitchen.junitrules.injection;
 
-import com.coderskitchen.junit.rule.injection.util.cut.EmptyClass;
-import com.coderskitchen.junit.rule.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junit.rule.injection.util.test.MocksToInject;
-import com.coderskitchen.junit.rule.injection.util.test.NothingMatchingToInject;
-import com.coderskitchen.junit.rule.injection.util.test.NothingToInject;
+import com.coderskitchen.junitrules.injection.util.cut.EmptyClass;
+import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
+import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.test.NothingMatchingToInject;
+import com.coderskitchen.junitrules.injection.util.test.NothingToInject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -60,10 +60,11 @@ public class InjectionMatcherTest {
     cut.atTestClass(cutTest);
     cut.calculateMatches();
     Set<InjectionMatch> matches = cut.getMatches();
-    InjectionMatch[] expected = new InjectionMatch[3];
+    InjectionMatch[] expected = new InjectionMatch[4];
     expected[0] = getInjectionMatch(cutter, "myTestProperty", cutTest, "myTestPropertyMock");
     expected[1] = getInjectionMatch(cutter, null, cutTest, "myStringMock");
-    expected[2] = getInjectionMatch(cutter, "mySecondTestProperty", cutTest, "mySecondTestPropertyMock");
+    expected[2] = getInjectionMatch(cutter, null, cutTest, "myThirdTestPropertyMock");
+    expected[3] = getInjectionMatch(cutter, "mySecondTestProperty", cutTest, "mySecondTestPropertyMock");
     assertThat(matches, hasItems(expected));
   }
 
