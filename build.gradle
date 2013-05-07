@@ -2,6 +2,9 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+sourceCompatibility = "1.6"
+
+
 repositories {
 	mavenCentral()
 	maven {
@@ -9,17 +12,17 @@ repositories {
 	}
 }
 
+
 dependencies {
-	compile 'junit:junit:4.11',
-			'org.eclipse.persistence:javax.persistence:2.0.3',
+	compile 'junit:junit:4.10', 'org.eclipse.persistence:javax.persistence:2.0.3',
 			'javax:javaee-api:6.0'
-        testCompile 'org.mockito:mockito-all:1.9.0'
+	testCompile 'org.mockito:mockito-all:1.9.0'
 	testRuntime 'org.eclipse.persistence:eclipselink:2.3.0',
 			'org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.3.0',
 			'org.apache.derby:derby:10.9.1.0'
 }
 
-task sourcesJar(type : Jar ){
+task sourcesJar(type: Jar) {
 	from sourceSets.main.allSource
 	classifier = 'sources'
 }
@@ -35,7 +38,7 @@ artifacts {
 	archives sourcesJar
 }
 
-if(hasProperty('sonatypeUsername')) {
+if (hasProperty('sonatypeUsername')) {
 	signing {
 		sign configurations.archives
 	}
@@ -75,6 +78,9 @@ if(hasProperty('sonatypeUsername')) {
 							name 'Peter Daum'
 						}
 					}
+				}
+				pom.whenConfigured { pom ->
+					pom.dependencies.findAll { dep -> dep.artifactId != 'junit' }.each{pom.dependencies.remove(it)}
 				}
 			}
 		}
