@@ -8,7 +8,7 @@ public class MocksToInject {
   String myStringMock;
 
   @Mock
-  String myTestPropertyMock;
+  public String myTestPropertyMock;
 
   String mySecondTestPropertyMock;
 

@@ -2,9 +2,9 @@ package com.coderskitchen.junit.rule.injection.util.cut;
 
 public class NonEmptyClass {
 
-  String myTestProperty;
+  public String myTestProperty;
 
-  String mySecondTestProperty;
+  public String mySecondTestProperty;
 
   int myThirdTestProperty;
 }
