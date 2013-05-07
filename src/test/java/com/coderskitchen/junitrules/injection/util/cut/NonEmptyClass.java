@@ -1,4 +1,4 @@
-package com.coderskitchen.junit.rule.injection.util.cut;
+package com.coderskitchen.junitrules.injection.util.cut;
 
 public class NonEmptyClass {
 
