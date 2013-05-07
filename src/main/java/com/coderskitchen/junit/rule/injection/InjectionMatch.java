@@ -1,10 +1,12 @@
 package com.coderskitchen.junit.rule.injection;
 
-public class InjectionMatch {
-  public final String mockField;
-  public final String classField;
+import java.lang.reflect.Field;
 
-  public InjectionMatch(final String mockField, final String classField) {
+public class InjectionMatch {
+  public final Field mockField;
+  public final Field classField;
+
+  public InjectionMatch(final Field mockField, final Field classField) {
     this.mockField = mockField;
     this.classField = classField;
   }
@@ -12,8 +14,8 @@ public class InjectionMatch {
   @Override
   public String toString() {
     final StringBuffer sb = new StringBuffer("InjectionMatch{");
-    sb.append("mockField='").append(mockField).append('\'');
-    sb.append(", classField='").append(classField).append('\'');
+    sb.append("mockField='").append(mockField.getName()).append('\'');
+    sb.append(", classField='").append(classField.getName()).append('\'');
     sb.append('}');
     return sb.toString();
   }
