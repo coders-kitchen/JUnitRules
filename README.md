@@ -1,37 +1,46 @@
-PersistanceManagerRule
-======================
+# JUnitRules #
 
-This rule provides a JUnit @Rule based setup of EntityManagers for tests.
+## About ##
+JUnitRules is a collection of rules for JUnit. It decreases the amount of boilerplate code written in tests.
 
-It's derived from TestDBRule tutorial.
+At the moment two rules are provided
+ * [EntityManagerRule](https://github.com/coders-kitchen/JUnitRules/edit/master/README.md#entitymanagerrule)
+ * [FilePrepareRule](https://github.com/coders-kitchen/JUnitRules/edit/master/README.md#filepreparerule)
 
-Usage
-=====
+## EntityManagerRule ##
 
-Using this rule can be done in this way:
+This rule provides a cool solution when you have to setup entity managers during your tests.
+Ecspecially when you are in the context of pure Java EE (6), you'll write often code like this
+
 ```java
-import static org.junit.Assert.assertTrue;
-import org.junit.Rule;
-import org.junit.Test;
+EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("YourPU");
+EntityManager em = emFactory.createEntityManager();
+Transaction trans = em.getTransaction();
+trans.begin();
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+// ... Your code
 
+trans.rollback();
+em.close();
+```
 
-/**
- * Unit test for simple App.
- */
-public class Example {
-    @Rule
-    public SetupEntityManagerRule setupEntityManagerRule = new SetupEntityManagerRule(this);
-    
-    @PersistenceContext(unitName="PUFromPersistence.xml")
-    EntityManager first;
-    
-    @Test
-    public void out() {
-        assertTrue(true);
-    }
+With this rule, this is compressed to this:
+
+```java
+@Rule
+public EntityManagerRule emRule = new EntityManagerRule(this);
+
+@PersistenceContext(unitName = "YourPU")
+EntityManager em;
+
+@Test
+public void yourTest() {
+    // ... your code
 }
 ```
+
 <b>Important</b> Please notice that you must provide the unitName. Otherwise the rule can't determine what to do.
+
+
+## FilePrepareRule ##
+
