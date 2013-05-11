@@ -57,16 +57,21 @@ public class EntityManagerStatement extends Statement {
       }
       surrounded.evaluate();
     } catch (Exception e) {
+      throw e;
+    } finally {
+      Exception thrown = null;
       for (EntityManager em : entityManagers) {
         try {
           em.getTransaction().rollback();
           em.close();
 
         } catch (Exception ex) {
+          thrown = ex;
           ex.printStackTrace();
         }
       }
-      throw e;
+      if(thrown != null)
+        throw thrown;
     }
   }
 }
