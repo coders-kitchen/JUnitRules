@@ -51,12 +51,14 @@ public class EntityManagerStatement extends Statement {
    */
   @Override
   public void evaluate() throws Throwable {
+    boolean statementThrowsNoException = true;
     try {
       for (EntityManager em : entityManagers) {
         em.getTransaction().begin();
       }
       surrounded.evaluate();
     } catch (Exception e) {
+      statementThrowsNoException = false;
       throw e;
     } finally {
       Exception thrown = null;
@@ -70,7 +72,7 @@ public class EntityManagerStatement extends Statement {
           ex.printStackTrace();
         }
       }
-      if(thrown != null)
+      if(statementThrowsNoException && thrown != null)
         throw thrown;
     }
   }

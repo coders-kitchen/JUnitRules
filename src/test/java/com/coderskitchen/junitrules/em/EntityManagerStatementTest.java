@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -66,5 +67,30 @@ public class EntityManagerStatementTest {
     when(emMock.getTransaction()).thenReturn(transactionMock);
     cut.evaluate();
     verify(statementMock, times(1)).evaluate();
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void expectionDuringStatementRethrown() throws Throwable {
+    cut = new EntityManagerStatement(statementMock, managers);
+    when(emMock.getTransaction()).thenReturn(transactionMock);
+    doThrow(new NullPointerException()).when(statementMock).evaluate();
+    cut.evaluate();
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void expectionDuringRollbackIsRethrown() throws Throwable {
+    cut = new EntityManagerStatement(statementMock, managers);
+    when(emMock.getTransaction()).thenReturn(transactionMock);
+    doThrow(new NullPointerException()).when(emMock).close();
+    cut.evaluate();
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void exceptionFromStatementOverridesExceptionFromRollback() throws Throwable {
+    cut = new EntityManagerStatement(statementMock, managers);
+    when(emMock.getTransaction()).thenReturn(transactionMock);
+    doThrow(new IndexOutOfBoundsException()).when(statementMock).evaluate();
+    doThrow(new NullPointerException()).when(emMock).close();
+    cut.evaluate();
   }
 }
