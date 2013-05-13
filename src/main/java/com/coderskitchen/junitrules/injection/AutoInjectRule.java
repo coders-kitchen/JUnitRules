@@ -30,12 +30,14 @@ public class AutoInjectRule implements TestRule {
    * @param objectUnderTest
    */
   public AutoInjectRule(Object objectUnderTest, Object test) {
+    System.out.println("Starting RULE");
     this.objectUnderTest = objectUnderTest;
     this.test = test;
   }
 
   @Override
   public Statement apply(final Statement base, final Description description) {
+    System.out.println("Starting apply");
     AutoInjectStatement autoInjectStatement = new AutoInjectStatement(new InjectionMatcher(), base);
     autoInjectStatement.atTestClass(test);
     autoInjectStatement.forClassUnderTest(objectUnderTest);

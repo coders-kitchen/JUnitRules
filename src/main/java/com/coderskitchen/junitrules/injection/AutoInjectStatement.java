@@ -46,6 +46,9 @@ public class AutoInjectStatement extends Statement {
 
   @Override
   public void evaluate() throws Throwable {
+    System.out.println("Evaluate surrounded");
+    surrounded.evaluate();
+    System.out.println("Evaluate AutoInjectStatement");
     matcher.calculateMatches();
     Set<InjectionMatch> matches = matcher.getMatches();
     for (InjectionMatch match : matches) {
@@ -53,12 +56,16 @@ public class AutoInjectStatement extends Statement {
       if (classField == null)
         continue;
       Field mockField = match.mockField;
-      boolean accessible = classField.isAccessible();
+      boolean cutAccessible = classField.isAccessible();
+      boolean testAccessible = mockField.isAccessible();
       classField.setAccessible(true);
+      mockField.setAccessible(true);
       Object value = mockField.get(testClass);
+      System.out.println(value);
       classField.set(classUnderTest, value);
-      classField.setAccessible(accessible);
+      classField.setAccessible(cutAccessible);
+      mockField.setAccessible(testAccessible);
     }
-    surrounded.evaluate();
+
   }
 }
