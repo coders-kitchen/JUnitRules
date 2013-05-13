@@ -96,6 +96,7 @@ public class EntityManagerRule implements TestRule {
         field.setAccessible(true);
         field.set(testClass, entityManager);
         field.setAccessible(accessible);
+        managers.add(entityManager);
       } catch (Exception ex) {
         throw new RuntimeException(ex);
       }
