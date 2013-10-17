@@ -1,7 +1,7 @@
 package com.coderskitchen.junitrules.injection;
 
 import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.test.TestClassWithInjectingFields;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -25,8 +25,8 @@ public class AutoInjectRuleTest {
   @Test
   public void testApply() throws Exception {
     NonEmptyClass classUnderTest = new NonEmptyClass();
-    MocksToInject mocksToInject = new MocksToInject();
-    AutoInjectRule cut = new AutoInjectRule(classUnderTest, mocksToInject);
+    TestClassWithInjectingFields testClassWithInjectingFields = new TestClassWithInjectingFields();
+    AutoInjectRule cut = new AutoInjectRule(classUnderTest, testClassWithInjectingFields);
     Statement result = cut.apply(statementMock, descriptionMock);
 
 

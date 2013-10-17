@@ -2,7 +2,7 @@ package com.coderskitchen.junitrules.injection;
 
 import com.coderskitchen.junitrules.injection.util.cut.EmptyClass;
 import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.test.TestClassWithInjectingFields;
 import com.coderskitchen.junitrules.injection.util.test.NothingToInject;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -47,16 +47,16 @@ public class AutoInjectStatementTest {
     cut = new AutoInjectStatement(matcherMock, statementMock);
 
     NonEmptyClass classUnderTest = new NonEmptyClass();
-    MocksToInject mocksToInject = new MocksToInject();
+    TestClassWithInjectingFields testClassWithInjectingFields = new TestClassWithInjectingFields();
 
     HashSet<InjectionMatch> value = new HashSet<InjectionMatch>();
-    value.add(new InjectionMatch(mocksToInject.getClass().getDeclaredField("myTestPropertyMock"), classUnderTest.getClass().getDeclaredField("myTestProperty")));
+    value.add(new InjectionMatch(testClassWithInjectingFields.getClass().getDeclaredField("myTestPropertyMock"), classUnderTest.getClass().getDeclaredField("myTestProperty")));
 
     when(matcherMock.getMatches()).thenReturn(value);
-    cut.atTestClass(mocksToInject);
+    cut.atTestClass(testClassWithInjectingFields);
     cut.forClassUnderTest(classUnderTest);
 
-    mocksToInject.myTestPropertyMock = "TEST";
+    testClassWithInjectingFields.myTestPropertyMock = "TEST";
     cut.evaluate();
 
     assertThat(classUnderTest.myTestProperty, is("TEST"));
@@ -67,16 +67,16 @@ public class AutoInjectStatementTest {
     cut = new AutoInjectStatement(matcherMock, statementMock);
 
     NonEmptyClass classUnderTest = new NonEmptyClass();
-    MocksToInject mocksToInject = new MocksToInject();
+    TestClassWithInjectingFields testClassWithInjectingFields = new TestClassWithInjectingFields();
 
     HashSet<InjectionMatch> value = new HashSet<InjectionMatch>();
-    value.add(new InjectionMatch(mocksToInject.getClass().getDeclaredField("myTestPropertyMock"), classUnderTest.getClass().getDeclaredField("myTestProperty")));
+    value.add(new InjectionMatch(testClassWithInjectingFields.getClass().getDeclaredField("myTestPropertyMock"), classUnderTest.getClass().getDeclaredField("myTestProperty")));
 
     when(matcherMock.getMatches()).thenReturn(value);
-    cut.atTestClass(mocksToInject);
+    cut.atTestClass(testClassWithInjectingFields);
     cut.forClassUnderTest(classUnderTest);
 
-    mocksToInject.myTestPropertyMock = "TEST";
+    testClassWithInjectingFields.myTestPropertyMock = "TEST";
     cut.evaluate();
 
     assertThat(classUnderTest.mySecondTestProperty, nullValue());
@@ -87,16 +87,16 @@ public class AutoInjectStatementTest {
     cut = new AutoInjectStatement(matcherMock, statementMock);
 
     NonEmptyClass classUnderTest = new NonEmptyClass();
-    MocksToInject mocksToInject = new MocksToInject();
+    TestClassWithInjectingFields testClassWithInjectingFields = new TestClassWithInjectingFields();
 
     HashSet<InjectionMatch> value = new HashSet<InjectionMatch>();
-    value.add(new InjectionMatch(mocksToInject.getClass().getDeclaredField("mySecondTestPropertyMock"), null));
+    value.add(new InjectionMatch(testClassWithInjectingFields.getClass().getDeclaredField("mySecondTestPropertyMock"), null));
 
     when(matcherMock.getMatches()).thenReturn(value);
-    cut.atTestClass(mocksToInject);
+    cut.atTestClass(testClassWithInjectingFields);
     cut.forClassUnderTest(classUnderTest);
 
-    mocksToInject.myTestPropertyMock = "TEST";
+    testClassWithInjectingFields.myTestPropertyMock = "TEST";
     cut.evaluate();
 
     assertThat(classUnderTest.mySecondTestProperty, nullValue());

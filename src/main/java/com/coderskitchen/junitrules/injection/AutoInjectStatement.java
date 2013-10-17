@@ -53,12 +53,19 @@ public class AutoInjectStatement extends Statement {
       if (classField == null)
         continue;
       Field mockField = match.mockField;
-      boolean accessible = classField.isAccessible();
-      classField.setAccessible(true);
-      Object value = mockField.get(testClass);
+			boolean accessible = setFieldAccessible(classField);
+			boolean mockAccessible = setFieldAccessible(mockField);
+			Object value = mockField.get(testClass);
       classField.set(classUnderTest, value);
       classField.setAccessible(accessible);
+			mockField.setAccessible(mockAccessible);
     }
     surrounded.evaluate();
   }
+
+	private boolean setFieldAccessible(Field classField) {
+		boolean accessible = classField.isAccessible();
+		classField.setAccessible(true);
+		return accessible;
+	}
 }

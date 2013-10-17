@@ -2,7 +2,7 @@ package com.coderskitchen.junitrules.injection;
 
 import com.coderskitchen.junitrules.injection.util.cut.EmptyClass;
 import com.coderskitchen.junitrules.injection.util.cut.NonEmptyClass;
-import com.coderskitchen.junitrules.injection.util.test.MocksToInject;
+import com.coderskitchen.junitrules.injection.util.test.TestClassWithInjectingFields;
 import com.coderskitchen.junitrules.injection.util.test.NothingMatchingToInject;
 import com.coderskitchen.junitrules.injection.util.test.NothingToInject;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,7 +43,7 @@ public class InjectionMatcherTest {
   @Test
   public void matchesFound() {
     Class cutter = NonEmptyClass.class;
-    Class<MocksToInject> cutTest = MocksToInject.class;
+    Class<TestClassWithInjectingFields> cutTest = TestClassWithInjectingFields.class;
     cut.forClassUnderTest(cutter);
     cut.atTestClass(cutTest);
     cut.calculateMatches();
@@ -51,4 +51,10 @@ public class InjectionMatcherTest {
     assertThat(matches.isEmpty(), is(false));
   }
 
+
+  private InjectionMatch getInjectionMatch(final Class classUnderTest, final String classFieldName, final Class cutTest, final String mockFieldName) throws NoSuchFieldException {
+    Field mockField = mockFieldName != null ? cutTest.getDeclaredField(mockFieldName) : null;
+    Field classField = classFieldName != null ? classUnderTest.getDeclaredField(classFieldName) : null;
+    return new InjectionMatch(mockField, classField);
+  }
 }
